@@ -1,12 +1,8 @@
 use babyjubjub_rs::{Fr, Point};
 use bitvec::{macros::internal::funty::Fundamental, prelude::*};
-use blake_hash::{
-    digest::generic_array::typenum::{bit, Bit},
-    Blake256, Digest,
-};
+use blake_hash::{Blake256, Digest};
 use ff_ce::{self, PrimeField};
 use num_bigint::BigInt;
-use std::{collections::HashMap, hash::Hash, ops::Shl};
 const GENPOINT_PREFIX: &str = "PedersenGenerator";
 const WINDOW_SIZE: u128 = 4;
 const N_WINDOW_PER_SEGMENT: u128 = 50;
@@ -20,7 +16,7 @@ pub fn pedersen_hash<T: AsRef<[u8]>>(msg: T) -> [u8; 32] {
     .unwrap()
         >> 3;
     let bits_per_segment = WINDOW_SIZE * N_WINDOW_PER_SEGMENT;
-    let mut bits: BitVec<u8, Lsb0> = BitVec::from_slice(msg.as_ref());
+    let bits: BitVec<u8, Lsb0> = BitVec::from_slice(msg.as_ref());
     let n_segments = ((bits.len().as_u128() - 1) / bits_per_segment) + 1;
     let mut acc_p = Point {
         x: Fr::from_str("0").unwrap(),
@@ -55,7 +51,7 @@ pub fn pedersen_hash<T: AsRef<[u8]>>(msg: T) -> [u8; 32] {
                 o += 1;
             }
             //b_3 if 1 then -acc; if 0 then +acc (opposite to the paper)
-            if (o < bits.len().as_u128()) {
+            if o < bits.len().as_u128() {
                 if bits[o.as_usize()] {
                     acc = -acc;
                 }
