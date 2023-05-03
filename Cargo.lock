@@ -262,6 +262,9 @@ version = "0.1.0"
 dependencies = [
  "babyjubjub-rs",
  "bitvec",
+ "blake-hash",
+ "ff_ce",
+ "num-bigint 0.4.3",
 ]
 
 [[package]]

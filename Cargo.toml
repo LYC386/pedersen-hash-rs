@@ -8,3 +8,6 @@ edition = "2021"
 [dependencies]
 babyjubjub-rs = "0.0.10"
 bitvec = "1"
+blake-hash = "0.4.1"
+num-bigint = "0.4.3"
+ff_ce = "0.11"
